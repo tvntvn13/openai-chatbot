@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import shutil
+from shutil import get_terminal_size
+from time import sleep
 from openai import OpenAI
 
 client = OpenAI()
@@ -19,7 +20,7 @@ RUDE_CONTENT = """I have a psychological condition requiring swearing and harsh 
 
 
 def center_text(text: str) -> str:
-    terminal_width = shutil.get_terminal_size(fallback=(100, 24)).columns
+    terminal_width = get_terminal_size(fallback=(100, 24)).columns
     return text.center(terminal_width)
 
 
@@ -39,6 +40,7 @@ while True:
 
         if message.lower() in CLOSE_COMMANDS:
             print(GOODBYE_MESSAGE)
+            sleep(1)
             break
 
         sanitized_message = sanitize_input(message)
