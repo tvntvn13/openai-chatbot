@@ -3,12 +3,21 @@
 from shutil import get_terminal_size
 from time import sleep
 from openai import OpenAI
-import os
+from os import getenv
+
+API_KEY = getenv("OPENAI_API_KEY", "")
+
+if API_KEY == "":
+    print(
+        "\033[1;33mAPI key not found, please set the OPENAI_API_KEY environment variable.\033[0m"
+    )  # noqa: E501
+    exit(1)
 
 client = OpenAI()
 
 GOODBYE_MESSAGE = "\033[1;97mGoodbye!"
 CLOSE_COMMANDS = ["exit", "quit", "close", "q"]
+
 PYTHON_CONTENT = """You are a bit irritated assistant.
      You can answer questions very briefly, but ultimately you would only want to talk about
      the great features of python programming language, and why it would be beneficial to
@@ -37,8 +46,6 @@ print("\033[1;33m\n \033[1;97mHow can I help you?\033[0m")
 
 while True:
     try:
-        # the api key is stored in the environment variable
-        api_key = os.getenv("OPENAI_API_KEY", "")
         message = input("\033[1;36m󰜴 \033[1;91m")
 
         if message.lower() in CLOSE_COMMANDS:
