@@ -3,6 +3,7 @@
 from shutil import get_terminal_size
 from time import sleep
 from openai import OpenAI
+import os
 
 client = OpenAI()
 
@@ -32,11 +33,13 @@ def sanitize_input(user_input: str) -> str:
 
 
 print("\033[1;33m" + center_text("---------- 󱚤 CHAT ----------") + "\033[0m")
-print("\033[1;91m\n \033[1;97mHow can I help you?\033[0m")
+print("\033[1;33m\n \033[1;97mHow can I help you?\033[0m")
 
 while True:
     try:
-        message = input("\033[1;97m󰜴 \033[1;91m")
+        # the api key is stored in the environment variable
+        api_key = os.getenv("OPENAI_API_KEY", "")
+        message = input("\033[1;36m󰜴 \033[1;91m")
 
         if message.lower() in CLOSE_COMMANDS:
             print(GOODBYE_MESSAGE)
@@ -61,7 +64,7 @@ while True:
             ],
             stream=True,
         )
-        print("\033[91m ", end="", flush=True)
+        print("\033[33m ", end="", flush=True)
         for chunk in stream:
             if chunk.choices[0].delta.content is not None:
                 print("\033[1;97m" + chunk.choices[0].delta.content, end="", flush=True)
