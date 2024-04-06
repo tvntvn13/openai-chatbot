@@ -22,7 +22,7 @@ git clone git@github.com:tvntvn13/openai-chatbot.git
 ```bash
 cd openai-chatbot
 python3 -m venv venv
-soure venv/bin/activate
+source venv/bin/activate
 ```
 
 - install dependencies
